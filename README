@@ -1,0 +1,10 @@
+frd: a flat ramdisk for the Linux kernel.
+
+The kernel's built-in ramdisk driver (brd.c) nicely doesn't allocate memory
+for data that hasn't been written, and keeps a radix tree mapping sectors to
+pages that have been written.  While this is good for saving memory, it has
+a performance cost, since radix-tree lookups and page allocation are in the
+hot paths of reading and writing data.
+
+This driver (frd) is a simpler, dumber, and faster ramdisk that simply
+allocates memory for its entire capacity during initialization.
